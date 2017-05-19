@@ -12,6 +12,7 @@ export PATH=$PWD:$PATH
 KUBERNETES_RELEASE=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 KOPS_RELEASE=$(curl -s https://github.com/kubernetes/kops/releases/ | grep -o "/kubernetes/kops/releases/download/.*/kops-$ARCH-amd64" | sort -V | tail -n1 | cut -d/ -f6)
 
+
 echo "kops $KOPS_RELEASE and kubernetes $KUBERNETES_RELEASE found."
 
 if kubectl help > /dev/null; then
@@ -29,6 +30,17 @@ else
     wget https://github.com/kubernetes/kops/releases/download/$KOPS_RELEASE/kops-$ARCH-amd64
     mv kops-$ARCH-amd64 kops
     chmod +x kops
+fi
+
+if helm help > /dev/null; then
+    echo "helm available in PATH, skipping..."
+else
+    HELM=helm-v2.4.1-$ARCH-amd64.tar.gz
+    echo "downloading helm 2.4.1"
+    wget https://kubernetes-helm.storage.googleapis.com/$HELM
+    tar xf $HELM
+    mv $ARCH-amd64/helm .
+    rm -rf $ARCH-amd64 $HELM
 fi
 
 echo

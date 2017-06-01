@@ -6,7 +6,7 @@
 Master:
   Name: jenkins-master
   Image: "jenkinsci/jenkins"
-  ImageTag: "2.61"
+  ImageTag: "2.62"
   ImagePullPolicy: "Always"
   Component: "jenkins-master"
   UseSecurity: true
@@ -19,7 +19,7 @@ Master:
   ServicePort: 8080
 # For minikube, set this to NodePort, elsewhere use LoadBalancer
 # Use ClusterIP if your setup includes ingress controller
-  ServiceType: ClusterIP
+  ServiceType: LoadBalancer
 # Used to create Ingress record (should used with ServiceType: ClusterIP)
 # HostName: jenkins.cluster.local
 # NodePort: <to set explicitly, choose port between 30000-32767
